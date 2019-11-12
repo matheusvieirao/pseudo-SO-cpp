@@ -1,6 +1,6 @@
 simulation: main.o processo.o memoria.o
 	@echo " Ligando os objetos para criar o arquivo 'pseudo-so'."
-	@g++ main.o processo.o memoria.o -g -std=c++11 -pthread -o pseudo-so
+	@g++ main.o processo.o memoria.o -g -std=c++11 -o pseudo-so
 	@echo " Pronto!"
 	@echo " Para rodar basta usar a seguinte linha de comando: ./pseudo-so arquivo_processes.txt  arquivo_files.txt"
 
