@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
-
+#include "processo.hpp"
 using namespace std;
 
 void leProcessos(string);
@@ -34,18 +34,21 @@ void leProcessos(string processes)
         cout << "\nErro ao abrir arquivo " << processes << endl;
     }
 
-    int v1, v2, v3, v4, v5, v6, v7, v8;
-    string line;
+	int v1, v2, v3, v4, v5, v6, v7, v8;
+	string line;
+	while (getline(inFile, line))
+	{
+		replace(line.begin(), line.end(), ',', ' '); // remove as ',' para poder fazer a leitura em stream
+		istringstream value_str_stream(line);
+		value_str_stream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8;
+		//cout <<v1<<v2<<v3<<v4<<v5<<v6<<v7<<v8<<endl; ////inserir aqui o construtor de processo!
+		//criaArrayProcessos(value_str_stream);
+		cout <<"valor 1: "<<v1<<endl;
+		Processo instancia(v1, v2, v3, v4, v5, v6, v7, v8, 0, 0, 0);
 
-    while (getline(inFile, line))
-    {
-        replace(line.begin(), line.end(), ',', ' '); // remove as ',' para poder fazer a leitura em stream
-        istringstream value_str_stream(line);
-        value_str_stream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8;
-        //cout <<v1<<v2<<v3<<v4<<v5<<v6<<v7<<v8<<endl; ////inserir aqui o construtor de processo!
-    }
 
-    inFile.close();
+	}
+	inFile.close();
 }
 
 void leArquivos(string files)
