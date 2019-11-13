@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include "processo.hpp"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ public:
     char getNome();
     int getInicio();
     int getTamanho();
+    int getCriador();
     ~Arquivo();
 };
 
@@ -50,14 +52,16 @@ private:
     vector<Arquivo> arquivos;
     vector<Operacao> operacoes;
     map<int, char> disco;
+    vector<pair<string, string>> log;
 
 public:
     GerenteArquivos(int qtdBlocos, int qtdSegmentos, vector<Arquivo> arquivos, vector<Operacao> operacoes);
     void imprimeOperacoes();
     void iniciaDisco();
     void imprimeMapa();
-    void criaArquivo();
+    void criaArquivo(char nome, int tamanho, int criador);
     void deletaArquivo(Arquivo arquivo);
+    void executaOperacoes(Processo processo);
     ~GerenteArquivos();
 };
 

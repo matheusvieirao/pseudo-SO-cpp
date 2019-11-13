@@ -23,6 +23,11 @@ inline int Arquivo::getTamanho()
     return this->tamanho;
 }
 
+inline int Arquivo::getCriador()
+{
+    return this->criador;
+}
+
 Arquivo::~Arquivo()
 {
 }
@@ -116,16 +121,71 @@ void GerenteArquivos::imprimeMapa()
     cout << endl;
 }
 
-void GerenteArquivos::criaArquivo()
+void GerenteArquivos::criaArquivo(char nome, int tamanho, int criador)
 {
+    for (auto &&arquivo : this->arquivos)
+    {
+        if (nome == arquivo.getNome())
+        {
+            this->log.push_back(make_pair("FALHA", string("O processo ") + to_string(criador) + " nao pode criar o arquivo " + nome + " porque já existe um arquivo com esse nome.\n"));
+
+            return;
+        }
+    }
+
+    int vazios = 0;
+
+    for (auto i = 0; i < this->qtdBlocos; i++)
+    {
+        if (disco[i] == ' ')
+        {
+            vazios++;
+
+            if (vazios == tamanho)
+            {
+                int inicio = i - vazios + 1;
+
+                for (auto j = inicio; j < inicio + tamanho; j++)
+                {
+                    disco[j] = nome;
+                }
+
+                arquivos.push_back(Arquivo(nome, inicio, tamanho, criador));
+                this->log.push_back(make_pair("SUCESSO", string("O processo ") + to_string(criador) + " criou o arquivo " +
+                                                             nome + " (blocos " + to_string(inicio) + " a " + to_string(inicio + tamanho - 1) + ").\n"));
+
+                return;
+            }
+        }
+        else
+        {
+            vazios = 0;
+        }
+    }
+
+    this->log.push_back(make_pair("FALHA", string("O processo ") + to_string(criador) + " nao pode criar o arquivo " + nome + " por falta de espaço.\n"));
 }
 
 void GerenteArquivos::deletaArquivo(Arquivo arquivo)
 {
-    for (auto i = arquivo.getInicio(); i < arquivo.getInicio() + arquivo.getTamanho(); i++)
+    for (auto &&file : this->arquivos)
     {
-        this->disco[i] = ' ';
+        if (file.getNome() == arquivo.getNome())
+        {
+            for (auto i = arquivo.getInicio(); i < arquivo.getInicio() + arquivo.getTamanho(); i++)
+            {
+                this->disco[i] = ' ';
+            }
+
+            return;
+        }
     }
+
+    this->log.push_back(make_pair("FALHA", string("O processo ") + to_string(arquivo.getCriador()) + " nao pode deletar o arquivo " + arquivo.getNome() + " porque nao existe esse arquivo.\n"));
+}
+
+void GerenteArquivos::executaOperacoes(Processo processo)
+{
 }
 
 GerenteArquivos::~GerenteArquivos()
