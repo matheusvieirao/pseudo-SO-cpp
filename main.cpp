@@ -21,6 +21,7 @@ vector<Processo> fila_prioridade_1;
 vector<Processo> fila_prioridade_2;
 vector<Processo> fila_prioridade_3;
 void dispatcher(vector<Processo>);
+void criaFilaTempoReal();
 int main(int argc, char *argv[])
 {
     if (argc != 3)
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
     leProcessos(argv[1]);
     GerenteArquivos gerenteArquivos = leArquivos(argv[2]);
     gerenteArquivos.iniciaDisco();
-
+    criaFilaTempoReal();
     fila_tempo_real = gp.getFilaTempoReal();
     fila_usuario = gp.getFilaUsuario();
     criaFilaPrioridades();
@@ -103,9 +104,11 @@ void leProcessos(string processes)
         vet_processos.push_back(instancia);
         pid++;
     }
-
     gp.setFilaPrincipal(vet_processos);
 
+    inFile.close();
+}
+void criaFilaTempoReal(){
     for (int i = 0; i < vet_processos.size(); i++)
     {
         if (vet_processos[i].get_prioridade() == 0)
@@ -116,8 +119,6 @@ void leProcessos(string processes)
             gp.setFilaUsuario(vet_processos[i]);
         }
     }
-
-    inFile.close();
 }
 void criaFilaPrioridades(){
     for (int i = 0; i < fila_usuario.size(); i++)
