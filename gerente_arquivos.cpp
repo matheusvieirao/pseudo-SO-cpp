@@ -176,7 +176,7 @@ void GerenteArquivos::criaArquivo(char nome, int tamanho, int criador)
         }
     }
 
-    cout << "P" << criador << " instruction" < < < < " - FALHA" << endl;
+    cout << "P" << criador << " instruction" << 0 << " - FALHA" << endl;
     cout << "O processo " << criador << " nao pode criar o arquivo " << nome << " por falta de espaço." << endl
          << endl;
 }

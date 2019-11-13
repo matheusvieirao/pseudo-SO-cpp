@@ -22,6 +22,7 @@ vector<Processo> fila_prioridade_2;
 vector<Processo> fila_prioridade_3;
 void dispatcher(vector<Processo>);
 void criaFilaTempoReal();
+
 int main(int argc, char *argv[])
 {
     if (argc != 3)
@@ -47,11 +48,49 @@ int main(int argc, char *argv[])
     dispatcher(fila_prioridade_3);
 
     gerenteArquivos.imprimeMapa();
+    cout << endl;
+
+    for (auto &&processo : fila_tempo_real)
+    {
+        gerenteArquivos.executaOperacoes(processo);
+        gerenteArquivos.imprimeMapa();
+        cout << endl;
+    }
+
+    for (auto &&processo : fila_prioridade_1)
+    {
+        gerenteArquivos.executaOperacoes(processo);
+        gerenteArquivos.imprimeMapa();
+        cout << endl;
+    }
+
+    for (auto &&processo : fila_prioridade_2)
+    {
+        gerenteArquivos.executaOperacoes(processo);
+        gerenteArquivos.imprimeMapa();
+        cout << endl;
+    }
+
+    for (auto &&processo : fila_prioridade_3)
+    {
+        gerenteArquivos.executaOperacoes(processo);
+        gerenteArquivos.imprimeMapa();
+        cout << endl;
+    }
+
     //gerenteArquivos.imprimeOperacoes();
+    // gerenteArquivos.deletaArquivo(Arquivo('X', 0, 2));
+    // gerenteArquivos.imprimeMapa();
+    // gerenteArquivos.deletaArquivo(Arquivo('A', 7, 6));
+    // gerenteArquivos.imprimeMapa();
+    // gerenteArquivos.criaArquivo('V', 4, 2);
+    // gerenteArquivos.imprimeMapa();
 
     return 0;
 }
-void dispatcher(vector<Processo> fila){
+
+void dispatcher(vector<Processo> fila)
+{
     for (int i = 0; i < fila.size(); i++)
     {
         cout << "dispatcher =>" << endl;
@@ -66,34 +105,8 @@ void dispatcher(vector<Processo> fila){
         cout << "\tdrives: " << fila[i].get_numero_disco() << endl;
         cout << endl;
     }
-    for (int i = 0; i < fila_usuario.size(); i++)
-    {
-        cout << "dispatcher =>" << endl;
-        cout << "\tPID: " << fila_usuario[i].get_PID() << endl;
-        cout << "\toffset: " << fila_usuario[i].get_offset() << endl;
-        cout << "\tblocks: " << fila_usuario[i].get_blocos_memoria() << endl;
-        cout << "\tpriority: " << fila_usuario[i].get_prioridade() << endl;
-        cout << "\ttime: " << fila_usuario[i].get_tempo_processador() << endl;
-        cout << "\tprintrs: " << fila_usuario[i].get_numero_impressora() << endl;
-        cout << "\tscanners: " << fila_usuario[i].get_requisicao_scanner() << endl;
-        cout << "\tmodems: " << fila_usuario[i].get_requisicao_modem() << endl;
-        cout << "\tdrives: " << fila_usuario[i].get_numero_disco() << endl;
-        cout << endl;
-    }
-
-    gerenteArquivos.imprimeMapa();
-    // gerenteArquivos.executaOperacoes();
-    gerenteArquivos.imprimeMapa();
-    //gerenteArquivos.imprimeOperacoes();
-    // gerenteArquivos.deletaArquivo(Arquivo('X', 0, 2));
-    // gerenteArquivos.imprimeMapa();
-    // gerenteArquivos.deletaArquivo(Arquivo('A', 7, 6));
-    // gerenteArquivos.imprimeMapa();
-    // gerenteArquivos.criaArquivo('V', 4, 2);
-    // gerenteArquivos.imprimeMapa();
-
-    return 0;
 }
+
 void leProcessos(string processes)
 {
     ifstream inFile;
@@ -134,7 +147,8 @@ void leProcessos(string processes)
 
     inFile.close();
 }
-void criaFilaTempoReal(){
+void criaFilaTempoReal()
+{
     for (int i = 0; i < vet_processos.size(); i++)
     {
         if (vet_processos[i].get_prioridade() == 0)
@@ -147,17 +161,20 @@ void criaFilaTempoReal(){
         }
     }
 }
-void criaFilaPrioridades(){
+void criaFilaPrioridades()
+{
     for (int i = 0; i < fila_usuario.size(); i++)
     {
         if (fila_usuario[i].get_prioridade() == 1)
         {
             gp.setFilaPrioridade1(fila_usuario[i]);
         }
-        else if (fila_usuario[i].get_prioridade() == 2){
+        else if (fila_usuario[i].get_prioridade() == 2)
+        {
             gp.setFilaPrioridade2(fila_usuario[i]);
         }
-        else if (fila_usuario[i].get_prioridade() == 3){
+        else if (fila_usuario[i].get_prioridade() == 3)
+        {
             gp.setFilaPrioridade3(fila_usuario[i]);
         }
     }
