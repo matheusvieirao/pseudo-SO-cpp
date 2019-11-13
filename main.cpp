@@ -52,7 +52,6 @@ void leProcessos(string processes)
 		
 
 	}
-	cout <<vet_processos[0].getTempo_init()<<endl;
 	GerenteProcessos fila;
 	fila.setFilaPrincipal(vet_processos);
 	//for (vector<Processo>::iterator i = vet_processos.begin(); i != vet_processos.end(); ++i)
