@@ -4,13 +4,14 @@
 class Processo
 {
 public:
-	Processo() {}
+    Processo() {}
 
-	int getPID();
-	void setPID(const int pid);
+    int getPID();
+
+    void setPID(const int pid);
 
 private:
-	int pid; //id do processo
+    int pid; //id do processo
 };
 
 #endif // PROCESSO_HPP

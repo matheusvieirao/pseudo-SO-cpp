@@ -2,10 +2,10 @@
 
 int Processo::getPID()
 {
-	return this->pid;
+    return this->pid;
 }
 
 void Processo::setPID(const int pid)
 {
-	this->pid = pid;
+    this->pid = pid;
 }
