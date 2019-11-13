@@ -7,27 +7,27 @@
 #include "processo.hpp"
 using namespace std;
 
-void ReadProcessos(string);
-void ReadArquivos(string);
+void leProcessos(string);
+void leArquivos(string);
 
-std::vector<Processo> vet_processos;
+vector<Processo> vet_processos;
 
-int main(int argq, char *argv[])
+int main(int argc, char *argv[])
 {
-	if (argq != 3)
+	if (argc != 3)
 	{
 		cerr << "\a Para o programa executar eh necessario passar exatamente 2 arquivos por parametro" << endl;
 		cerr << "\a Exemplo: ./pseudo-so processes.txt files.txt" << endl;
 		return -1;
 	}
 
-	ReadProcessos(argv[1]);
-	ReadArquivos(argv[2]);
+	leProcessos(argv[1]);
+	leArquivos(argv[2]);
 
 	return 0;
 }
 
-void ReadProcessos(string processes)
+void leProcessos(string processes)
 {
 	ifstream inFile;
 	inFile.open(processes);
@@ -52,7 +52,8 @@ void ReadProcessos(string processes)
 	}
 	inFile.close();
 }
-void ReadArquivos(string files)
+
+void leArquivos(string files)
 {
 	ifstream inFile;
 	inFile.open(files);
@@ -95,5 +96,42 @@ void ReadArquivos(string files)
 		}
 		i++;
 	}
+	inFile.close();
+	string line;
+	int i = 0;
+	int blocosDisco;
+	int segmentosOcupados = 0;
+	char nomeArquivo;
+	int primeiroBloco, blocosOcupados;
+	int idProcesso, opCode, operacaoProcesso;
+
+	while (getline(inFile, line))
+	{
+		if (i < 1)
+		{
+			blocosDisco = atoi(line.c_str()); //quantidade de blocos no disco
+		}
+		else if (i < 2)
+		{
+			segmentosOcupados = atoi(line.c_str()); //quantidade de segmentos ocupados no disco
+		}
+		else if (i < (segmentosOcupados + 2))
+		{
+			replace(line.begin(), line.end(), ',', ' ');
+			istringstream value_str_stream(line);
+			value_str_stream >> nomeArquivo >> primeiroBloco >> blocosOcupados;
+			//////falta colocar um construtor aqui pra cada linha dessa
+		}
+		else
+		{
+			replace(line.begin(), line.end(), ',', ' ');
+			istringstream value_str_stream(line);
+			value_str_stream >> idProcesso >> opCode >> nomeArquivo >> blocosOcupados >> operacaoProcesso;
+			//////falta colocar um construtor aqui pra cada linha dessa
+		}
+
+		i++;
+	}
+
 	inFile.close();
 }

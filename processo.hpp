@@ -24,6 +24,8 @@ public:
 	int getTempo_init();
 	void setTempo_init(const int tempo_init);
 
+    void setPID(const int pid);
+
 private:
 	int _tempo_init;
 	int _prioridade;
