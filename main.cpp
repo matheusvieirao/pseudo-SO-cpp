@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <vector>
 #include "processo.hpp"
+#include "gerente_processos.hpp"
 using namespace std;
 
 void leProcessos(string);
@@ -46,10 +47,16 @@ void leProcessos(string processes)
 		value_str_stream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8;
 		//cout <<v1<<v2<<v3<<v4<<v5<<v6<<v7<<v8<<endl; ////inserir aqui o construtor de processo!
 		//criaArrayProcessos(value_str_stream);
-		cout << "valor 1: " << v1 << endl;
 		Processo instancia(v1, v2, v3, v4, v5, v6, v7, v8, 0, 0, 0);
 		vet_processos.push_back(instancia);
+		
+
 	}
+	cout <<vet_processos[0].getTempo_init()<<endl;
+	GerenteProcessos fila;
+	fila.setFilaPrincipal(vet_processos);
+	//for (vector<Processo>::iterator i = vet_processos.begin(); i != vet_processos.end(); ++i)
+    //	std::cout << *i._tempo_init << ' ';
 	inFile.close();
 }
 
@@ -97,8 +104,8 @@ void leArquivos(string files)
 		i++;
 	}
 	inFile.close();
-	string line;
-	int i = 0;
+	//line;
+	 i = 0;
 	int blocosDisco;
 	int segmentosOcupados = 0;
 	char nomeArquivo;

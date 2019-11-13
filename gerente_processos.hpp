@@ -7,7 +7,8 @@ using namespace std;
 class GerenteProcessos
 {
 public:
-
+    vector<Processo> getFilaPrincipal();
+    void setFilaPrincipal(vector<Processo> processos);
 
 private:
     vector<Processo> _fila_tempo_real;
