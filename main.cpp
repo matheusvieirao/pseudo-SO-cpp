@@ -16,6 +16,7 @@ GerenteArquivos leArquivos(string);
 vector<Processo> vet_processos;
 GerenteProcessos gp;
 vector<Processo> fila_tempo_real;
+vector<Processo> fila_usuario;
 
 int main(int argc, char *argv[])
 {
@@ -31,6 +32,7 @@ int main(int argc, char *argv[])
     gerenteArquivos.iniciaDisco();
 
     fila_tempo_real = gp.getFilaTempoReal();
+    fila_usuario = gp.getFilaUsuario();
 
     for (int i = 0; i < fila_tempo_real.size(); i++)
     {
@@ -46,9 +48,23 @@ int main(int argc, char *argv[])
         cout << "\tdrives: " << fila_tempo_real[i].get_numero_disco() << endl;
         cout << endl;
     }
+        for (int i = 0; i < fila_usuario.size(); i++)
+    {
+        cout << "dispatcher =>" << endl;
+        cout << "\tPID: " << fila_usuario[i].get_PID() << endl;
+        cout << "\toffset: " << fila_usuario[i].get_offset() << endl;
+        cout << "\tblocks: " << fila_usuario[i].get_blocos_memoria() << endl;
+        cout << "\tpriority: " << fila_usuario[i].get_prioridade() << endl;
+        cout << "\ttime: " << fila_usuario[i].get_tempo_processador() << endl;
+        cout << "\tprintrs: " << fila_usuario[i].get_numero_impressora() << endl;
+        cout << "\tscanners: " << fila_usuario[i].get_requisicao_scanner() << endl;
+        cout << "\tmodems: " << fila_usuario[i].get_requisicao_modem() << endl;
+        cout << "\tdrives: " << fila_usuario[i].get_numero_disco() << endl;
+        cout << endl;
+    }
 
     gerenteArquivos.imprimeMapa();
-    gerenteArquivos.imprimeOperacoes();
+    //gerenteArquivos.imprimeOperacoes();
 
     return 0;
 }
@@ -74,7 +90,6 @@ void leProcessos(string processes)
         value_str_stream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8;
         //cout <<v1<<v2<<v3<<v4<<v5<<v6<<v7<<v8<<endl; ////inserir aqui o construtor de processo!
         //criaArrayProcessos(value_str_stream);
-        cout << "valor 1: " << pid << endl;
         Processo instancia = Processo();
         instancia.set_tempo_init(v1);
         instancia.set_prioridade(v2);
@@ -98,6 +113,9 @@ void leProcessos(string processes)
         if (vet_processos[i].get_prioridade() == 0)
         {
             gp.setFilaTempoReal(vet_processos[i]);
+        }
+        else {
+            gp.setFilaUsuario(vet_processos[i]);
         }
     }
 

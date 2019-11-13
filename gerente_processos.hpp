@@ -13,7 +13,8 @@ public:
     void setFilaPrincipal(vector<Processo> processos);
     void setFilaTempoReal(Processo processo);
     vector<Processo> getFilaTempoReal();
-
+    void setFilaUsuario(Processo processo);
+    vector<Processo> getFilaUsuario();
 private:
     vector<Processo> _fila_tempo_real;
     vector<Processo> _fila_usuario;

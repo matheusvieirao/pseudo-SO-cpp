@@ -16,3 +16,11 @@ vector<Processo> GerenteProcessos::getFilaTempoReal()
 {
     return this->_fila_tempo_real;
 }
+void GerenteProcessos::setFilaUsuario(Processo processo)
+{
+    this->_fila_usuario.push_back(processo);
+}
+vector<Processo> GerenteProcessos::getFilaUsuario()
+{
+    return this->_fila_usuario;
+}
