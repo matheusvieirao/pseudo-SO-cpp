@@ -5,6 +5,8 @@
 #include <algorithm>
 using namespace std;
 
+void ReadProcessos(string);
+
 int main(int argq, char *argv[])
 {
 	if (argq != 3)
@@ -17,6 +19,13 @@ int main(int argq, char *argv[])
 	string processes = argv[1];
 	string files = argv[2];
 
+	ReadProcessos(processes);
+
+
+	return 0;
+}
+
+void ReadProcessos(string processes){
 	ifstream inFile;
 	inFile.open(processes);
 
@@ -34,6 +43,4 @@ int main(int argq, char *argv[])
 		//cout <<v1<<v2<<v3<<v4<<v5<<v6<<v7<<v8<<endl; ////inserir aqui o construtor de processo!
 	}
 	inFile.close();
-
-	return 0;
 }
