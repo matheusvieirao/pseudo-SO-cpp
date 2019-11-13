@@ -15,3 +15,8 @@ processo.o: processo.cpp processo.hpp
 memoria.o: memoria.cpp memoria.hpp
 	@echo " Criando memoria.o"
 	@g++ memoria.cpp -g -std=c++11 -c
+
+clean:
+	rm pseudo-so
+	rm *.o
+
