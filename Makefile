@@ -1,4 +1,4 @@
-simulation: main.o processo.o memoria.o gerente_processos.o
+simulation: main.o processo.o memoria.o gerente_processos.o gerente_arquivos.o
 	@echo " Ligando os objetos para criar o arquivo 'pseudo-so'."
 	@g++ main.o processo.o memoria.o gerente_processos.o gerente_arquivos.o -g -std=c++11 -o pseudo-so
 	@echo " Pronto!"
