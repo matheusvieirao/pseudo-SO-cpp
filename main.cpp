@@ -3,10 +3,13 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include "processo.hpp"
 using namespace std;
+
 
 void ReadProcessos(string);
 void ReadArquivos(string);
+
 
 int main(int argq, char *argv[])
 {
@@ -40,7 +43,12 @@ void ReadProcessos(string processes)
 		replace(line.begin(), line.end(), ',', ' '); // remove as ',' para poder fazer a leitura em stream
 		istringstream value_str_stream(line);
 		value_str_stream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8;
-		//cout <<v1<<v2<<v3<<v4<<v5<<v6<<v7<<v8<<endl; ////inserir aqui o construtor de processo!
+		cout <<v1<<v2<<v3<<v4<<v5<<v6<<v7<<v8<<endl; ////inserir aqui o construtor de processo!
+		//criaArrayProcessos(value_str_stream);
+		Processo instancia(v1, v2, v3, v4, v5, v6, v7, v8, 0, 0, 0, 0);
+		cout <<instancia.getPID();
+		cout <<instancia.getPrioridade();
+
 	}
 	inFile.close();
 }
