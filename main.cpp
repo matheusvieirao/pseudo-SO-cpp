@@ -72,40 +72,8 @@ void leArquivos(string files)
 
 	int v1, v2, v3, v4;
 	char c;
-	int i = 0;
 	string line;
-	int blocos, seg_ocup = 0;
-	while (getline(inFile, line))
-	{
-		if (i < 1)
-		{
-			blocos = atoi(line.c_str()); //quantidade de blocos no disco
-			v1 = blocos;
-		}
-		else if (i < 2)
-		{
-			seg_ocup = atoi(line.c_str()); //quantidade de segmentos ocupados no disco
-			v1 = seg_ocup;
-		}
-		else if (i < (seg_ocup + 2))
-		{
-			replace(line.begin(), line.end(), ',', ' ');
-			istringstream value_str_stream(line);
-			value_str_stream >> c >> v2 >> v3;
-			//////falta colocar um construtor aqui pra cada linha dessa
-		}
-		else
-		{
-			replace(line.begin(), line.end(), ',', ' ');
-			istringstream value_str_stream(line);
-			value_str_stream >> v1 >> v2 >> c >> v3 >> v4;
-			//////falta colocar um construtor aqui pra cada linha dessa
-		}
-		i++;
-	}
-	inFile.close();
-	//line;
-	 i = 0;
+	int i = 0;
 	int blocosDisco;
 	int segmentosOcupados = 0;
 	char nomeArquivo;
