@@ -5,6 +5,9 @@
 #include <algorithm>
 #include <vector>
 #include "processo.hpp"
+#include "gerente_arquivos.hpp"
+#include "gerente_processos.hpp"
+
 using namespace std;
 
 void leProcessos(string);
@@ -91,8 +94,6 @@ void leArquivos(string files)
 		cout << "\nErro ao abrir arquivo " << files << endl;
 	}
 
-	int v1, v2, v3, v4;
-	char c;
 	string line;
 	int i = 0;
 	int blocosDisco;
@@ -100,6 +101,7 @@ void leArquivos(string files)
 	char nomeArquivo;
 	int primeiroBloco, blocosOcupados;
 	int idProcesso, opCode, operacaoProcesso;
+	vector<Arquivo> arquivos;
 
 	while (getline(inFile, line))
 	{
@@ -116,7 +118,8 @@ void leArquivos(string files)
 			replace(line.begin(), line.end(), ',', ' ');
 			istringstream value_str_stream(line);
 			value_str_stream >> nomeArquivo >> primeiroBloco >> blocosOcupados;
-			//////falta colocar um construtor aqui pra cada linha dessa
+
+			arquivos.insert(arquivos.end(), Arquivo(nomeArquivo, primeiroBloco, blocosOcupados));
 		}
 		else
 		{
