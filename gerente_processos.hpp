@@ -20,4 +20,4 @@ private:
     Processo _em_execucao;
     int _ultimoPID;
 };
-#endif 
+#endif
