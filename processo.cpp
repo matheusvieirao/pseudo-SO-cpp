@@ -2,23 +2,32 @@
 
 int Processo::getPID()
 {
-	return this->pid;
+	return this->_PID;
 }
 
 void Processo::setPID(const int pid)
 {
-	this->pid = pid;
+	this->_PID = pid;
+}
+int Processo::getTempo_init()
+{
+	return this->_tempo_init;
+}
+
+void Processo::setTempo_init(const int tempo_init)
+{
+	this->_tempo_init = tempo_init;
 }
 int Processo::getPrioridade()
 {
-	return this->prioridade;
+	return this->_prioridade;
 }
 
 void Processo::setPrioridade(const int prioridade)
 {
-	this->prioridade = pid;
+	this->_prioridade = prioridade;
 }
-Processo::Processo(int pid, //id do processo
+Processo::Processo(
 	int tempo_init,
     int prioridade,
    	int tempo_processador,
@@ -29,4 +38,7 @@ Processo::Processo(int pid, //id do processo
 	int numero_disco,
 	int offset,
 	int PID,
-	int execucoes){}
+	int execucoes){
+		_PID = PID;
+		_tempo_init = tempo_init;
+	}
