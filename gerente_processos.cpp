@@ -24,3 +24,27 @@ vector<Processo> GerenteProcessos::getFilaUsuario()
 {
     return this->_fila_usuario;
 }
+void GerenteProcessos::setFilaPrioridade1(Processo processo)
+{
+    this->_prioridade_1.push_back(processo);
+}
+vector<Processo> GerenteProcessos::getFilaPrioridade1()
+{
+    return this->_prioridade_1;
+}
+void GerenteProcessos::setFilaPrioridade2(Processo processo)
+{
+    this->_prioridade_2.push_back(processo);
+}
+vector<Processo> GerenteProcessos::getFilaPrioridade2()
+{
+    return this->_prioridade_2;
+}
+void GerenteProcessos::setFilaPrioridade3(Processo processo)
+{
+    this->_prioridade_3.push_back(processo);
+}
+vector<Processo> GerenteProcessos::getFilaPrioridade3()
+{
+    return this->_prioridade_3;
+}
