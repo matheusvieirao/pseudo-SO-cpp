@@ -3,7 +3,7 @@
 
 #include "processo.hpp"
 #include <vector>
-
+#include <iostream>
 using namespace std;
 
 class GerenteProcessos
@@ -11,6 +11,8 @@ class GerenteProcessos
 public:
     vector<Processo> getFilaPrincipal();
     void setFilaPrincipal(vector<Processo> processos);
+    void setFilaTempoReal(Processo processo);
+    vector<Processo> getFilaTempoReal();
 
 private:
     vector<Processo> _fila_tempo_real;

@@ -14,6 +14,8 @@ void leProcessos(string);
 GerenteArquivos leArquivos(string);
 
 vector<Processo> vet_processos;
+GerenteProcessos gp;
+vector<Processo> fila_tempo_real;
 
 int main(int argc, char *argv[])
 {
@@ -24,24 +26,27 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    leProcessos(argv[1]);
-    GerenteArquivos gerenteArquivos = leArquivos(argv[2]);
+	leProcessos(argv[1]);
+	leArquivos(argv[2]);
     gerenteArquivos.iniciaDisco();
-
-    for (int i = 0; i < vet_processos.size(); i++)
-    {
-        cout << "dispatcher =>" << endl;
-        cout << "\tPID: " << vet_processos[i].get_PID() << endl;
-        cout << "\toffset: " << vet_processos[i].get_offset() << endl;
-        cout << "\tblocks: " << vet_processos[i].get_blocos_memoria() << endl;
-        cout << "\tpriority: " << vet_processos[i].get_prioridade() << endl;
-        cout << "\ttime: " << vet_processos[i].get_tempo_processador() << endl;
-        cout << "\tprintrs: " << vet_processos[i].get_numero_impressora() << endl;
-        cout << "\tscanners: " << vet_processos[i].get_requisicao_scanner() << endl;
-        cout << "\tmodems: " << vet_processos[i].get_requisicao_modem() << endl;
-        cout << "\tdrives: " << vet_processos[i].get_numero_disco() << endl;
-        cout << endl;
-    }
+    
+	fila_tempo_real = gp.getFilaTempoReal();
+	
+    for (int i = 0; i < fila_tempo_real.size(); i++)
+	{
+		cout << "dispatcher =>" << endl;
+		cout << "\tPID: " << fila_tempo_real[i].get_PID() << endl;
+		cout << "\toffset: " << fila_tempo_real[i].get_offset() << endl;
+		cout << "\tblocks: " << fila_tempo_real[i].get_blocos_memoria() << endl;
+		cout << "\tpriority: " << fila_tempo_real[i].get_prioridade() << endl;
+		cout << "\ttime: " << fila_tempo_real[i].get_tempo_processador() << endl;
+		cout << "\tprintrs: " << fila_tempo_real[i].get_numero_impressora() << endl;
+		cout << "\tscanners: " << fila_tempo_real[i].get_requisicao_scanner() << endl;
+		cout << "\tmodems: " << fila_tempo_real[i].get_requisicao_modem() << endl;
+		cout << "\tdrives: " << fila_tempo_real[i].get_numero_disco() << endl;
+		cout << endl;
+	}
+    
 
     gerenteArquivos.imprimeMapa();
 
@@ -58,33 +63,41 @@ void leProcessos(string processes)
         cout << "\nErro ao abrir arquivo " << processes << endl;
     }
 
-    int v1, v2, v3, v4, v5, v6, v7, v8;
-    string line;
-    int pid = 0;
-    while (getline(inFile, line))
-    {
-        replace(line.begin(), line.end(), ',', ' '); // remove as ',' para poder fazer a leitura em stream
-        istringstream value_str_stream(line);
-        value_str_stream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8;
-        //cout <<v1<<v2<<v3<<v4<<v5<<v6<<v7<<v8<<endl; ////inserir aqui o construtor de processo!
-        //criaArrayProcessos(value_str_stream);
-        cout << "valor 1: " << pid << endl;
-        Processo instancia = Processo();
-        instancia.set_tempo_init(v1);
-        instancia.set_prioridade(v2);
-        instancia.set_tempo_processador(v3);
-        instancia.set_blocos_memoria(v4);
-        instancia.set_numero_impressora(v5);
-        instancia.set_requisicao_scanner(v6);
-        instancia.set_requisicao_modem(v7);
-        instancia.set_numero_disco(v8);
-        instancia.set_offset(0);
-        instancia.set_PID(pid);
-        instancia.set_execucoes(0);
-        vet_processos.push_back(instancia);
-        pid++;
-    }
-    inFile.close();
+	int v1, v2, v3, v4, v5, v6, v7, v8;
+	string line;
+	int pid = 0;
+	while (getline(inFile, line))
+	{
+		replace(line.begin(), line.end(), ',', ' '); // remove as ',' para poder fazer a leitura em stream
+		istringstream value_str_stream(line);
+		value_str_stream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8;
+		//cout <<v1<<v2<<v3<<v4<<v5<<v6<<v7<<v8<<endl; ////inserir aqui o construtor de processo!
+		//criaArrayProcessos(value_str_stream);
+		cout << "valor 1: " << pid << endl;
+		Processo instancia = Processo();
+		instancia.set_tempo_init(v1);
+		instancia.set_prioridade(v2);
+		instancia.set_tempo_processador(v3);
+		instancia.set_blocos_memoria(v4);
+		instancia.set_numero_impressora(v5);
+		instancia.set_requisicao_scanner(v6);
+		instancia.set_requisicao_modem(v7);
+		instancia.set_numero_disco(v8);
+		instancia.set_offset(0);
+		instancia.set_PID(pid);
+		instancia.set_execucoes(0);
+		vet_processos.push_back(instancia);
+		pid++;
+	}
+
+	gp.setFilaPrincipal(vet_processos);
+	    for(int i=0;i<vet_processos.size();i++){
+			if(vet_processos[i].get_prioridade()==0){
+				gp.setFilaTempoReal(vet_processos[i]);
+			}
+		}
+
+	inFile.close();
 }
 
 GerenteArquivos leArquivos(string files)
