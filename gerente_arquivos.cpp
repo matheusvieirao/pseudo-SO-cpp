@@ -27,16 +27,38 @@ Arquivo::~Arquivo()
 {
 }
 
-Operacao::Operacao(int pid, int opCode, char nomeArquivo, int blocosOcupados)
+Operacao::Operacao(int pid, int opCode, char nomeArquivo, int blocosOcupados, int operacaoProcesso)
 {
     this->pid = pid;
     this->opCode = opCode;
-    this->nomeArquivo = nomeArquivo;
+    this->arquivo = nomeArquivo;
+    this->blocosOcupados = blocosOcupados;
+    this->operacaoProcesso = operacaoProcesso;
+}
 
-    if (opCode == 0)
-    {
-        this->blocosOcupados = blocosOcupados;
-    }
+inline int Operacao::getPID()
+{
+    return this->pid;
+}
+
+inline int Operacao::getOpCode()
+{
+    return this->opCode;
+}
+
+inline char Operacao::getArquivo()
+{
+    return this->arquivo;
+}
+
+inline int Operacao::getBlocosOcupados()
+{
+    return this->blocosOcupados;
+}
+
+inline int Operacao::getOperacaoProcesso()
+{
+    return this->operacaoProcesso;
 }
 
 Operacao::~Operacao()
@@ -49,6 +71,21 @@ GerenteArquivos::GerenteArquivos(int qtdBlocos, int qtdSegmentos, vector<Arquivo
     this->qtdSegmentos = qtdSegmentos;
     this->arquivos = arquivos;
     this->operacoes = operacoes;
+}
+
+void GerenteArquivos::imprimeOperacoes()
+{
+    for (auto &&operacao : this->operacoes)
+    {
+        cout << operacao.getPID() << ", " << operacao.getOpCode() << ", " << operacao.getArquivo() << ", ";
+
+        if (operacao.getOpCode() == 0)
+        {
+            cout << operacao.getBlocosOcupados() << ", ";
+        }
+
+        cout << operacao.getOperacaoProcesso() << endl;
+    }
 }
 
 void GerenteArquivos::iniciaDisco()

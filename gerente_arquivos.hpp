@@ -28,11 +28,17 @@ class Operacao
 private:
     int pid;
     int opCode;
-    char nomeArquivo;
+    char arquivo;
     int blocosOcupados;
+    int operacaoProcesso;
 
 public:
-    Operacao(int pid, int opCode, char nomeArquivo, int blocosOcupados = 0);
+    Operacao(int pid, int opCode, char nomeArquivo, int blocosOcupados, int operacaoProcesso);
+    int getPID();
+    int getOpCode();
+    char getArquivo();
+    int getBlocosOcupados();
+    int getOperacaoProcesso();
     ~Operacao();
 };
 
@@ -47,6 +53,7 @@ private:
 
 public:
     GerenteArquivos(int qtdBlocos, int qtdSegmentos, vector<Arquivo> arquivos, vector<Operacao> operacoes);
+    void imprimeOperacoes();
     void iniciaDisco();
     void imprimeMapa();
     void criaArquivo();

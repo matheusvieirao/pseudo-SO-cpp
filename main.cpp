@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
     }
 
     gerenteArquivos.imprimeMapa();
+    gerenteArquivos.imprimeOperacoes();
 
     return 0;
 }
@@ -65,6 +66,7 @@ void leProcessos(string processes)
     int v1, v2, v3, v4, v5, v6, v7, v8;
     string line;
     int pid = 0;
+
     while (getline(inFile, line))
     {
         replace(line.begin(), line.end(), ',', ' '); // remove as ',' para poder fazer a leitura em stream
@@ -90,6 +92,7 @@ void leProcessos(string processes)
     }
 
     gp.setFilaPrincipal(vet_processos);
+
     for (int i = 0; i < vet_processos.size(); i++)
     {
         if (vet_processos[i].get_prioridade() == 0)
@@ -103,12 +106,12 @@ void leProcessos(string processes)
 
 GerenteArquivos leArquivos(string files)
 {
-    ifstream inFile;
-    inFile.open(files);
+    ifstream file(files);
 
-    if (!inFile)
+    if (!file)
     {
-        cout << "\nErro ao abrir arquivo " << files << endl;
+        cerr << "Erro ao abrir o arquivo " << files << endl;
+        exit(1); // call system to stop
     }
 
     string line;
@@ -121,17 +124,17 @@ GerenteArquivos leArquivos(string files)
     vector<Arquivo> arquivos;
     vector<Operacao> operacoes;
 
-    while (getline(inFile, line))
+    while (getline(file, line))
     {
-        if (i < 1)
+        if (i == 0)
         {
-            blocosDisco = atoi(line.c_str()); //quantidade de blocos no disco
+            blocosDisco = atoi(line.c_str()); // quantidade de blocos do disco
         }
-        else if (i < 2)
+        else if (i == 1)
         {
-            segmentosOcupados = atoi(line.c_str()); //quantidade de segmentos ocupados no disco
+            segmentosOcupados = atoi(line.c_str()); // quantidade de segmentos ocupados no disco
         }
-        else if (i < (segmentosOcupados + 2))
+        else if (i < segmentosOcupados + 2)
         {
             replace(line.begin(), line.end(), ',', ' ');
             istringstream value_str_stream(line);
@@ -143,15 +146,25 @@ GerenteArquivos leArquivos(string files)
         {
             replace(line.begin(), line.end(), ',', ' ');
             istringstream value_str_stream(line);
-            value_str_stream >> pid >> opCode >> nomeArquivo >> blocosOcupados >> operacaoProcesso;
+            value_str_stream >> pid >> opCode >> nomeArquivo;
 
-            operacoes.insert(operacoes.end(), Operacao(pid, opCode, nomeArquivo, blocosOcupados));
+            if (opCode == 0)
+            {
+                value_str_stream >> blocosOcupados >> operacaoProcesso;
+            }
+            else if (opCode == 1)
+            {
+                value_str_stream >> operacaoProcesso;
+                blocosOcupados = 0;
+            }
+
+            operacoes.insert(operacoes.end(), Operacao(pid, opCode, nomeArquivo, blocosOcupados, operacaoProcesso));
         }
 
         i++;
     }
 
-    inFile.close();
+    file.close();
 
     GerenteArquivos gerenteArquivos(blocosDisco, segmentosOcupados, arquivos, operacoes);
 
