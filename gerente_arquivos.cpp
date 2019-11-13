@@ -2,9 +2,9 @@
 
 Arquivo::Arquivo(char nome, int primeiroBloco, int blocosOcupados)
 {
-    this.nome = nome;
-    this.primeiroBloco = primeiroBloco;
-    this.blocosOcupados = blocosOcupados;
+    this->nome = nome;
+    this->primeiroBloco = primeiroBloco;
+    this->blocosOcupados = blocosOcupados;
 }
 
 Arquivo::~Arquivo()
@@ -13,7 +13,7 @@ Arquivo::~Arquivo()
 
 Operacao::Operacao(int opCode)
 {
-    this.opCode = opCode;
+    this->opCode = opCode;
 }
 
 Operacao::~Operacao()

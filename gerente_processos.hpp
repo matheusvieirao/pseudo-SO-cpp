@@ -1,7 +1,9 @@
 #ifndef GERENTE_PROCESSOS_HPP
 #define GERENTE_PROCESSOS_HPP
+
 #include "processo.hpp"
 #include <vector>
+
 using namespace std;
 
 class GerenteProcessos
@@ -20,4 +22,5 @@ private:
     Processo _em_execucao;
     int _ultimoPID;
 };
+
 #endif

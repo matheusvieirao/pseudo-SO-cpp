@@ -20,7 +20,7 @@ gerente_processos.o: gerente_processos.cpp gerente_processos.hpp
 	@echo " Criando gerente_processos.o"
 	@g++ gerente_processos.cpp -g -std=c++11 -c
 
-gerente_arquivos:
+gerente_arquivos.o: gerente_arquivos.cpp gerente_arquivos.hpp
 	@echo " Criando gerente_arquivos.o"
 	@g++ gerente_arquivos.cpp -g -std=c++11 -c
 
