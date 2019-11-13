@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
         cout << "\tdrives: " << fila_tempo_real[i].get_numero_disco() << endl;
         cout << endl;
     }
-        for (int i = 0; i < fila_usuario.size(); i++)
+    for (int i = 0; i < fila_usuario.size(); i++)
     {
         cout << "dispatcher =>" << endl;
         cout << "\tPID: " << fila_usuario[i].get_PID() << endl;
@@ -64,7 +64,15 @@ int main(int argc, char *argv[])
     }
 
     gerenteArquivos.imprimeMapa();
+    // gerenteArquivos.executaOperacoes();
+    gerenteArquivos.imprimeMapa();
     //gerenteArquivos.imprimeOperacoes();
+    // gerenteArquivos.deletaArquivo(Arquivo('X', 0, 2));
+    // gerenteArquivos.imprimeMapa();
+    // gerenteArquivos.deletaArquivo(Arquivo('A', 7, 6));
+    // gerenteArquivos.imprimeMapa();
+    // gerenteArquivos.criaArquivo('V', 4, 2);
+    // gerenteArquivos.imprimeMapa();
 
     return 0;
 }
@@ -114,7 +122,8 @@ void leProcessos(string processes)
         {
             gp.setFilaTempoReal(vet_processos[i]);
         }
-        else {
+        else
+        {
             gp.setFilaUsuario(vet_processos[i]);
         }
     }

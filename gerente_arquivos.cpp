@@ -1,5 +1,9 @@
 #include "gerente_arquivos.hpp"
 
+Arquivo::Arquivo()
+{
+}
+
 Arquivo::Arquivo(char nome, int primeiroBloco, int blocosOcupados, int PID)
 {
     this->nome = nome;
@@ -11,6 +15,11 @@ Arquivo::Arquivo(char nome, int primeiroBloco, int blocosOcupados, int PID)
 inline char Arquivo::getNome()
 {
     return this->nome;
+}
+
+void Arquivo::setNome(char nome)
+{
+    this->nome = nome;
 }
 
 inline int Arquivo::getInicio()
@@ -127,7 +136,9 @@ void GerenteArquivos::criaArquivo(char nome, int tamanho, int criador)
     {
         if (nome == arquivo.getNome())
         {
-            this->log.push_back(make_pair("FALHA", string("O processo ") + to_string(criador) + " nao pode criar o arquivo " + nome + " porque já existe um arquivo com esse nome.\n"));
+            cout << "P" << criador << " instruction" << 0 << " - FALHA" << endl;
+            cout << "O processo " << criador << " nao pode criar o arquivo " << nome << " porque já existe um arquivo com esse nome." << endl
+                 << endl;
 
             return;
         }
@@ -151,8 +162,10 @@ void GerenteArquivos::criaArquivo(char nome, int tamanho, int criador)
                 }
 
                 arquivos.push_back(Arquivo(nome, inicio, tamanho, criador));
-                this->log.push_back(make_pair("SUCESSO", string("O processo ") + to_string(criador) + " criou o arquivo " +
-                                                             nome + " (blocos " + to_string(inicio) + " a " + to_string(inicio + tamanho - 1) + ").\n"));
+
+                cout << "P" << criador << " instruction" << 0 << " - SUCESSO" << endl;
+                cout << "O processo " << criador << " criou o arquivo " << nome << " (blocos " << inicio << " a " << inicio + tamanho - 1 << ")." << endl
+                     << endl;
 
                 return;
             }
@@ -163,29 +176,75 @@ void GerenteArquivos::criaArquivo(char nome, int tamanho, int criador)
         }
     }
 
-    this->log.push_back(make_pair("FALHA", string("O processo ") + to_string(criador) + " nao pode criar o arquivo " + nome + " por falta de espaço.\n"));
+    cout << "P" << criador << " instruction" < < < < " - FALHA" << endl;
+    cout << "O processo " << criador << " nao pode criar o arquivo " << nome << " por falta de espaço." << endl
+         << endl;
 }
 
 void GerenteArquivos::deletaArquivo(Arquivo arquivo)
 {
-    for (auto &&file : this->arquivos)
+    for (auto i = arquivo.getInicio(); i < arquivo.getInicio() + arquivo.getTamanho(); i++)
     {
-        if (file.getNome() == arquivo.getNome())
-        {
-            for (auto i = arquivo.getInicio(); i < arquivo.getInicio() + arquivo.getTamanho(); i++)
-            {
-                this->disco[i] = ' ';
-            }
-
-            return;
-        }
+        this->disco[i] = ' ';
     }
-
-    this->log.push_back(make_pair("FALHA", string("O processo ") + to_string(arquivo.getCriador()) + " nao pode deletar o arquivo " + arquivo.getNome() + " porque nao existe esse arquivo.\n"));
 }
 
 void GerenteArquivos::executaOperacoes(Processo processo)
 {
+    vector<Operacao> opExec;
+
+    for (auto &&operacao : this->operacoes)
+    {
+        if (processo.get_PID() == operacao.getPID())
+        {
+            opExec.push_back(operacao);
+        }
+    }
+
+    for (auto &&operacao : this->operacoes)
+    {
+        if (operacao.getOpCode() == 0)
+        {
+            this->criaArquivo(operacao.getArquivo(), operacao.getBlocosOcupados(), operacao.getPID());
+        }
+        else
+        {
+            Arquivo deleterio = Arquivo();
+            deleterio.setNome('-');
+
+            for (auto &&arquivo : this->arquivos)
+            {
+                if (arquivo.getNome() == operacao.getArquivo())
+                {
+                    deleterio = arquivo;
+                }
+            }
+
+            if (deleterio.getNome() != '-')
+            {
+                if (processo.get_prioridade() == 0 || deleterio.getCriador() == 0 || deleterio.getCriador() == operacao.getPID())
+                {
+                    this->deletaArquivo(deleterio);
+
+                    cout << "P" << operacao.getPID() << " instruction" << operacao.getOperacaoProcesso() << " - SUCESSO" << endl;
+                    cout << "O processo " << operacao.getPID() << " deletou o arquivo " << operacao.getArquivo() << "." << endl
+                         << endl;
+                }
+                else
+                {
+                    cout << "P" << operacao.getPID() << " instruction" << operacao.getOperacaoProcesso() << " - FALHA" << endl;
+                    cout << "O processo " << operacao.getPID() << " nao pode deletar o arquivo " << operacao.getArquivo() << " porque nao possui permissao." << endl
+                         << endl;
+                }
+            }
+            else
+            {
+                cout << "P" << operacao.getPID() << " instruction" << operacao.getOperacaoProcesso() << " - FALHA" << endl;
+                cout << "O processo " << operacao.getPID() << " nao pode deletar o arquivo " << operacao.getArquivo() << " porque nao existe esse arquivo." << endl
+                     << endl;
+            }
+        }
+    }
 }
 
 GerenteArquivos::~GerenteArquivos()

@@ -17,8 +17,10 @@ private:
     int criador;
 
 public:
+    Arquivo();
     Arquivo(char nome, int primeiroBloco, int blocosOcupados, int PID = 0);
     char getNome();
+    void setNome(char nome);
     int getInicio();
     int getTamanho();
     int getCriador();
@@ -62,6 +64,7 @@ public:
     void criaArquivo(char nome, int tamanho, int criador);
     void deletaArquivo(Arquivo arquivo);
     void executaOperacoes(Processo processo);
+    void imprimeLog();
     ~GerenteArquivos();
 };
 
