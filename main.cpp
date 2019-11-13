@@ -24,6 +24,21 @@ int main(int argc, char *argv[])
 	leProcessos(argv[1]);
 	leArquivos(argv[2]);
 
+	for (int i = 0; i < vet_processos.size(); i++)
+	{
+		cout << "dispatcher =>" << endl;
+		cout << "\tPID: " << vet_processos[i].get_PID() << endl;
+		cout << "\toffset: " << vet_processos[i].get_offset() << endl;
+		cout << "\tblocks: " << vet_processos[i].get_blocos_memoria() << endl;
+		cout << "\tpriority: " << vet_processos[i].get_prioridade() << endl;
+		cout << "\ttime: " << vet_processos[i].get_tempo_processador() << endl;
+		cout << "\tprintrs: " << vet_processos[i].get_numero_impressora() << endl;
+		cout << "\tscanners: " << vet_processos[i].get_requisicao_scanner() << endl;
+		cout << "\tmodems: " << vet_processos[i].get_requisicao_modem() << endl;
+		cout << "\tdrives: " << vet_processos[i].get_numero_disco() << endl;
+		cout << endl;
+	}
+
 	return 0;
 }
 
@@ -39,6 +54,7 @@ void leProcessos(string processes)
 
 	int v1, v2, v3, v4, v5, v6, v7, v8;
 	string line;
+	int pid = 0;
 	while (getline(inFile, line))
 	{
 		replace(line.begin(), line.end(), ',', ' '); // remove as ',' para poder fazer a leitura em stream
@@ -46,9 +62,21 @@ void leProcessos(string processes)
 		value_str_stream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8;
 		//cout <<v1<<v2<<v3<<v4<<v5<<v6<<v7<<v8<<endl; ////inserir aqui o construtor de processo!
 		//criaArrayProcessos(value_str_stream);
-		cout << "valor 1: " << v1 << endl;
-		Processo instancia(v1, v2, v3, v4, v5, v6, v7, v8, 0, 0, 0);
+		cout << "valor 1: " << pid << endl;
+		Processo instancia = Processo();
+		instancia.set_tempo_init(v1);
+		instancia.set_prioridade(v2);
+		instancia.set_tempo_processador(v3);
+		instancia.set_blocos_memoria(v4);
+		instancia.set_numero_impressora(v5);
+		instancia.set_requisicao_scanner(v6);
+		instancia.set_requisicao_modem(v7);
+		instancia.set_numero_disco(v8);
+		instancia.set_offset(0);
+		instancia.set_PID(pid);
+		instancia.set_execucoes(0);
 		vet_processos.push_back(instancia);
+		pid++;
 	}
 	inFile.close();
 }
