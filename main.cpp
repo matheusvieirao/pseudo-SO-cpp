@@ -45,9 +45,9 @@ void ReadProcessos(string processes)
 		value_str_stream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8;
 		//cout <<v1<<v2<<v3<<v4<<v5<<v6<<v7<<v8<<endl; ////inserir aqui o construtor de processo!
 		//criaArrayProcessos(value_str_stream);
+		cout <<"valor 1: "<<v1<<endl;
 		Processo instancia(v1, v2, v3, v4, v5, v6, v7, v8, 0, 0, 0);
-		cout <<instancia.getPID()<<endl;
-		cout <<instancia.getTempo_init()<<endl;
+
 
 	}
 	inFile.close();
