@@ -1,5 +1,6 @@
 #ifndef GERENTE_PROCESSOS_HPP
 #define GERENTE_PROCESSOS_HPP
+
 #include "processo.hpp"
 #include <vector>
 #include <iostream>
@@ -10,9 +11,8 @@ class GerenteProcessos
 public:
     vector<Processo> getFilaPrincipal();
     void setFilaPrincipal(vector<Processo> processos);
-    void separaProcessos();
     void setFilaTempoReal(Processo processo);
-
+    vector<Processo> getFilaTempoReal();
 
 private:
     vector<Processo> _fila_tempo_real;
@@ -24,4 +24,5 @@ private:
     Processo _em_execucao;
     int _ultimoPID;
 };
-#endif 
+
+#endif

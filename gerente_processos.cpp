@@ -9,11 +9,6 @@ void GerenteProcessos::setFilaPrincipal(vector<Processo> processos){
 void GerenteProcessos::setFilaTempoReal(Processo processo){
     this->_fila_tempo_real.push_back(processo);
 }
-void separaProcessos(){
-    GerenteProcessos gp;
-    vector<Processo> fila;
-
-
-    for(int i=0;i<fila.size();i++)
-    cout <<i;
+vector<Processo> GerenteProcessos::getFilaTempoReal(){
+    return this->_fila_tempo_real;
 }
