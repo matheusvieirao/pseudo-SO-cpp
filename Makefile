@@ -1,6 +1,6 @@
-simulation: main.o processo.o memoria.o
+simulation: main.o processo.o memoria.o gerente_processos.o
 	@echo " Ligando os objetos para criar o arquivo 'pseudo-so'."
-	@g++ main.o processo.o memoria.o -g -std=c++11 -o pseudo-so
+	@g++ main.o processo.o memoria.o gerente_processos.o -g -std=c++11 -o pseudo-so
 	@echo " Pronto!"
 	@echo " Para rodar basta usar a seguinte linha de comando: ./pseudo-so arquivo_processes.txt  arquivo_files.txt"
 
@@ -15,6 +15,10 @@ processo.o: processo.cpp processo.hpp
 memoria.o: memoria.cpp memoria.hpp
 	@echo " Criando memoria.o"
 	@g++ memoria.cpp -g -std=c++11 -c
+
+gerente_processos.o: gerente_processos.cpp gerente_processos.hpp
+	@echo " Criando gerente_processos.o"
+	@g++ gerente_processos.cpp -g -std=c++11 -c
 
 clean:
 	rm pseudo-so
