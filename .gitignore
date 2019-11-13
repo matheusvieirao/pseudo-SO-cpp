@@ -1,2 +1,8 @@
 
 *.o
+
+.idea/
+
+*.exe
+
+pseudo-so
