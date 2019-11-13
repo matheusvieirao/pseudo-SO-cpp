@@ -54,8 +54,13 @@ void leProcessos(string processes)
 	}
 	GerenteProcessos fila;
 	fila.setFilaPrincipal(vet_processos);
-	//for (vector<Processo>::iterator i = vet_processos.begin(); i != vet_processos.end(); ++i)
-    //	std::cout << *i._tempo_init << ' ';
+	    for(int i=0;i<vet_processos.size();i++){
+			if(vet_processos[i].getPrioridade()==0){
+				fila.setFilaTempoReal(vet_processos[i]);
+				cout <<vet_processos[i].getPrioridade();
+			}
+		}
+
 	inFile.close();
 }
 
