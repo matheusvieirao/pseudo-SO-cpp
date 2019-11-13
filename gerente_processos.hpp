@@ -9,12 +9,18 @@ using namespace std;
 class GerenteProcessos
 {
 public:
-    vector<Processo> getFilaPrincipal();
     void setFilaPrincipal(vector<Processo> processos);
+    vector<Processo> getFilaPrincipal();
     void setFilaTempoReal(Processo processo);
     vector<Processo> getFilaTempoReal();
     void setFilaUsuario(Processo processo);
     vector<Processo> getFilaUsuario();
+    void setFilaPrioridade1(Processo processo);
+    vector<Processo> getFilaPrioridade1();
+    void setFilaPrioridade2(Processo processo);
+    vector<Processo> getFilaPrioridade2();
+    void setFilaPrioridade3(Processo processo);
+    vector<Processo> getFilaPrioridade3();
 private:
     vector<Processo> _fila_tempo_real;
     vector<Processo> _fila_usuario;

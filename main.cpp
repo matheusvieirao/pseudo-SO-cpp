@@ -12,12 +12,16 @@ using namespace std;
 
 void leProcessos(string);
 GerenteArquivos leArquivos(string);
-
+void criaFilaPrioridades();
 vector<Processo> vet_processos;
 GerenteProcessos gp;
 vector<Processo> fila_tempo_real;
 vector<Processo> fila_usuario;
-
+vector<Processo> fila_prioridade_1;
+vector<Processo> fila_prioridade_2;
+vector<Processo> fila_prioridade_3;
+void dispatcher(vector<Processo>);
+void criaFilaTempoReal();
 int main(int argc, char *argv[])
 {
     if (argc != 3)
@@ -30,22 +34,36 @@ int main(int argc, char *argv[])
     leProcessos(argv[1]);
     GerenteArquivos gerenteArquivos = leArquivos(argv[2]);
     gerenteArquivos.iniciaDisco();
-
+    criaFilaTempoReal();
     fila_tempo_real = gp.getFilaTempoReal();
     fila_usuario = gp.getFilaUsuario();
+    criaFilaPrioridades();
+    fila_prioridade_1 = gp.getFilaPrioridade1();
+    fila_prioridade_2 = gp.getFilaPrioridade2();
+    fila_prioridade_3 = gp.getFilaPrioridade3();
+    dispatcher(fila_tempo_real);
+    dispatcher(fila_prioridade_1);
+    dispatcher(fila_prioridade_2);
+    dispatcher(fila_prioridade_3);
 
-    for (int i = 0; i < fila_tempo_real.size(); i++)
+    gerenteArquivos.imprimeMapa();
+    //gerenteArquivos.imprimeOperacoes();
+
+    return 0;
+}
+void dispatcher(vector<Processo> fila){
+    for (int i = 0; i < fila.size(); i++)
     {
         cout << "dispatcher =>" << endl;
-        cout << "\tPID: " << fila_tempo_real[i].get_PID() << endl;
-        cout << "\toffset: " << fila_tempo_real[i].get_offset() << endl;
-        cout << "\tblocks: " << fila_tempo_real[i].get_blocos_memoria() << endl;
-        cout << "\tpriority: " << fila_tempo_real[i].get_prioridade() << endl;
-        cout << "\ttime: " << fila_tempo_real[i].get_tempo_processador() << endl;
-        cout << "\tprintrs: " << fila_tempo_real[i].get_numero_impressora() << endl;
-        cout << "\tscanners: " << fila_tempo_real[i].get_requisicao_scanner() << endl;
-        cout << "\tmodems: " << fila_tempo_real[i].get_requisicao_modem() << endl;
-        cout << "\tdrives: " << fila_tempo_real[i].get_numero_disco() << endl;
+        cout << "\tPID: " << fila[i].get_PID() << endl;
+        cout << "\toffset: " << fila[i].get_offset() << endl;
+        cout << "\tblocks: " << fila[i].get_blocos_memoria() << endl;
+        cout << "\tpriority: " << fila[i].get_prioridade() << endl;
+        cout << "\ttime: " << fila[i].get_tempo_processador() << endl;
+        cout << "\tprintrs: " << fila[i].get_numero_impressora() << endl;
+        cout << "\tscanners: " << fila[i].get_requisicao_scanner() << endl;
+        cout << "\tmodems: " << fila[i].get_requisicao_modem() << endl;
+        cout << "\tdrives: " << fila[i].get_numero_disco() << endl;
         cout << endl;
     }
     for (int i = 0; i < fila_usuario.size(); i++)
@@ -76,7 +94,6 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
 void leProcessos(string processes)
 {
     ifstream inFile;
@@ -113,9 +130,11 @@ void leProcessos(string processes)
         vet_processos.push_back(instancia);
         pid++;
     }
-
     gp.setFilaPrincipal(vet_processos);
 
+    inFile.close();
+}
+void criaFilaTempoReal(){
     for (int i = 0; i < vet_processos.size(); i++)
     {
         if (vet_processos[i].get_prioridade() == 0)
@@ -127,10 +146,22 @@ void leProcessos(string processes)
             gp.setFilaUsuario(vet_processos[i]);
         }
     }
-
-    inFile.close();
 }
-
+void criaFilaPrioridades(){
+    for (int i = 0; i < fila_usuario.size(); i++)
+    {
+        if (fila_usuario[i].get_prioridade() == 1)
+        {
+            gp.setFilaPrioridade1(fila_usuario[i]);
+        }
+        else if (fila_usuario[i].get_prioridade() == 2){
+            gp.setFilaPrioridade2(fila_usuario[i]);
+        }
+        else if (fila_usuario[i].get_prioridade() == 3){
+            gp.setFilaPrioridade3(fila_usuario[i]);
+        }
+    }
+}
 GerenteArquivos leArquivos(string files)
 {
     ifstream file(files);
